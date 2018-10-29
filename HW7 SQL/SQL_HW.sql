@@ -76,7 +76,8 @@ FROM film
 INNER JOIN film_actor ON film.film_id = film_actor.film_id;
 
 #6d
-Select * FROM film;
+SELECT count(*) FROM sakila.film
+WHERE title like 'Hunchback Impossible';
 
 #6e
 
@@ -89,7 +90,7 @@ WHERE title LIKE 'K%' OR 'Q%' IN
 	WHERE name = 'English'
     );
 
-    #7b
+  #7b
 Select * from film;
 Select * from actor;
 Select * from film_actor;
@@ -101,7 +102,6 @@ WHERE actor_id IN
  FROM film_actor
  WHERE film_id = 17
 );
-
 
     
 # 7c --> check number    
