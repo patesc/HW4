@@ -71,8 +71,13 @@ FROM staff
 INNER JOIN address ON staff.address_id = address.address_id;
 
 #6b
+SELECT first_name, last_name, SUM(amount) FROM staff s
+JOIN payment p
+ON s.staff_id = p.staff_id
+GROUP BY p.staff_id
+ORDER BY last_name;
 
-#6C
+#6c
 SELECT film_actor.film_id, film_actor.actor_id, film.title
 FROM film
 INNER JOIN film_actor ON film.film_id = film_actor.film_id;
@@ -96,7 +101,7 @@ WHERE title LIKE 'K%' OR 'Q%' IN
 	WHERE name = 'English'
     );
 
-    #7b
+#7b
 Select * from film;
 Select * from actor;
 Select * from film_actor;
