@@ -146,9 +146,14 @@ WHERE film_id IN
 );
 
 #7e
-SELECT film_id, inventory_id FROM inventory 
-JOIN (SELECT inventory_id, COUNT(inventory_id) FROM rental
-GROUP BY rental_id) AS inventory2 ON rental.rental_id = inventory.rental_id;
+SELECT COUNT(r.inventory_id), t.title, i.film_id AS 'Frequently_rented'
+FROM inventory i
+JOIN rental r
+ON i.inventory_id = r.inventory_id
+JOIN film_text t
+ON i.film_id = t.film_id
+GROUP BY r.inventory_id
+ORDER BY Frequently_rented DESC, COUNT(r.inventory_id);
 
 #7f
 SELECT so.store_id, SUM(amount)
