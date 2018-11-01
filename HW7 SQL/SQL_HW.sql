@@ -71,11 +71,10 @@ FROM staff
 INNER JOIN address ON staff.address_id = address.address_id;
 
 #6b
-SELECT first_name, last_name, SUM(amount) FROM staff s
-JOIN payment p
-ON s.staff_id = p.staff_id
-GROUP BY p.staff_id
-ORDER BY last_name;
+SELECT first_name, last_name FROM staff
+JOIN(SELECT staff_id, SUM(amount) FROM payment WHERE payment_date LIKE '2005-08%'
+GROUP BY staff_id) AS AUG2005
+ON AUG2005.staff_id = staff.staff_id;
 
 #6c
 SELECT film_actor.film_id, film_actor.actor_id, film.title
@@ -147,14 +146,9 @@ WHERE film_id IN
 );
 
 #7e
-SELECT COUNT(r.inventory_id), t.title, i.film_id AS 'Frequently_rented'
-FROM inventory i
-JOIN rental r
-ON i.inventory_id = r.inventory_id
-JOIN film_text t
-ON i.film_id = t.film_id
-GROUP BY r.inventory_id
-ORDER BY Frequently_rented DESC, COUNT(r.inventory_id);
+SELECT film_id, inventory_id FROM inventory 
+JOIN (SELECT inventory_id, COUNT(inventory_id) FROM rental
+GROUP BY rental_id) AS inventory2 ON rental.rental_id = inventory.rental_id;
 
 #7f
 SELECT so.store_id, SUM(amount)
