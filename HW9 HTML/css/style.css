@@ -1,0 +1,73 @@
+.maingraph-desc {
+  margin-bottom: 15px;
+  margin-top: 40px;
+  font-family: "Georgia";
+
+   Typography 
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.click-plot {
+  margin-bottom: 15px;
+  margin-top: 20px;
+  font-family: "Georgia";
+  font-size: 13px;
+  text-align: left;
+}
+
+.graph-description {
+  padding: 20px;
+  margin-top: 10px;
+  background-color: #fff;
+  font-family: "Georgia";
+  font-weight: bold;
+}
+
+#preview-nav {
+  padding: 21px 30px 43px;
+  margin-top: 5px;
+  background-color: #fff;
+}
+
+.viz-header { 
+  margin-bottom: 15px;
+  font-family: "Georgia";
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  /*color: #;*/
+}
+
+.viz-photo {
+  width: 140px;
+  height: 140px;
+}
+
+.viz-photo.active {
+  border: 2px solid #000000;
+}
+
+#images {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.margin-description {
+
+  margin-bottom: 60px;
+}
+
+.data-text{
+  padding-bottom: 10px;
+  font-family: "Georgia";
+}
+
+#image-summary {
+  float: left;
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+
+}
+
