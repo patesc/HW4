@@ -1,42 +1,79 @@
-// from data.js
-var tableData = data;
-// console.log(data);
+// from SQL
+// Samples_Metadata = Base.classes.sample_metadata
+// Samples = Base.classes.samples
 
-// var tableBody = d3.select("tablebody");
-var tbody = d3.select("tbody");
+function buildMetadata(sample) {
 
-function createTable(tableData) {
+  //Build the metadata panel
+  var url= `/metadata/${sample}`;
+  d3.json(url).then(function(sample){
 
-  tableData.forEach((report_sight) => {
-    // console.log(report_sight)
-    var row = tbody.append("tr");
+    var sampleMetadata = d3.select("#sample-metadata");
 
-    Object.entries(report_sight).forEach(([key, value]) => {
-      var cells = row.append("td");
-        cells.text(value);
-    });
+  //clear any existing metadata
+
+    sampleMetadata.html("");
+
+    //`Object.entries` to add each key and value pair to the panel
+    // **use d3 to append new
+    Object.entries(sample).forEach(([key, value]) => {
+      sampleMetadata.append("p");
+      sampleMetadata.text(`${key} :${value}`);
+    }
   });
 }
 
-var filterButton = d3.select("#filter-btn");
+function buildCharts(sample) {
 
-filterButton.on("click", function() {
-  d3.event.preventDefault();
+// @app.route("/samples/<sample>")
 
-  var inputDateTime = d3.select("#datetime");
-  var inputValue = inputDateTime.property("value");
-    // console.log(inputValue);
+  var url = `/samples/${sample}`;
+  d3.json(url).then(function(data){
 
-  if (inputValue == "") {
-    createTable(tableData);
-  } 
+// Bubble chart
+// app.py - Return `otu_ids`, `otu_labels`,and `sample_values
 
-    else {
-    var DataFilter = tableData.filter(rowData => rowData.datetime === inputValue);
-    createTable(DataFilter);
-  }
-});
-
-createTable(tableData);
+    var otu_ids = data.otu_ids;
+    var otu_labels = data.otu_labels;
+    var sample_values = data.sample_values;
 
 
+  })
+
+
+
+    // @TODO: Build a Bubble Chart using the sample data
+
+    // @TODO: Build a Pie Chart
+    // HINT: You will need to use slice() to grab the top 10 sample_values,
+    // otu_ids, and labels (10 each).
+}
+
+function init() {
+  // Grab a reference to the dropdown select element
+  var selector = d3.select("#selDataset");
+
+  // Use the list of sample names to populate the select options
+  d3.json("/names").then((sampleNames) => {
+    sampleNames.forEach((sample) => {
+      selector
+        .append("option")
+        .text(sample)
+        .property("value", sample);
+    });
+
+    // Use the first sample from the list to build the initial plots
+    const firstSample = sampleNames[0];
+    buildCharts(firstSample);
+    buildMetadata(firstSample);
+  });
+}
+
+function optionChanged(newSample) {
+  // Fetch new data each time a new sample is selected
+  buildCharts(newSample);
+  buildMetadata(newSample);
+}
+
+// Initialize the dashboard
+init();
