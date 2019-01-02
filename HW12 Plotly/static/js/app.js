@@ -37,16 +37,39 @@ function buildCharts(sample) {
     var otu_labels = data.otu_labels;
     var sample_values = data.sample_values;
 
+    var trace1 = {
+      y: sample_values,
+      x: otu_ids,
+      type: 'scatter',
+      mode: 'markers',
+      marker: {
+        size: sample_values,
+      }
+    };
 
-  })
+      var data = [trace1];
 
+      var layout = { 
+        title: 'Bubble Chart',
+        showlegend: false,
+        height: 600
+        width: 900
+      };
 
+      Plotly.newPlot('bubble', data, layout);
 
-    // @TODO: Build a Bubble Chart using the sample data
+    // Build a Pie Chart
+    // Use slice() to grab the top 10 sample_values,otu_ids, and labels (10 each).
 
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
+      var data = [{
+        values: sample_values.splice(0,10),
+        labels: otu_ids.splice(0,10),
+        text: sample_values.splice(0,10),
+        type: 'pie' }];
+
+      Plotly.newPlot('pie',data)
+  });
+
 }
 
 function init() {
